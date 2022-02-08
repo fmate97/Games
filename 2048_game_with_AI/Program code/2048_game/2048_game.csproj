@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>_2048_game</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>2048game_logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+</Project>

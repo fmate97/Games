@@ -1,0 +1,5 @@
+C:\Users\fmate\Downloads\2048game\2048_game.exe
+C:\Users\fmate\Downloads\2048game\2048_game.dll
+C:\Users\fmate\Downloads\2048game\2048_game.deps.json
+C:\Users\fmate\Downloads\2048game\2048_game.runtimeconfig.json
+C:\Users\fmate\Downloads\2048game\2048_game.pdb
