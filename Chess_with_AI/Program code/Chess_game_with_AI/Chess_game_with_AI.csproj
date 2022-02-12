@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>chess.ico</ApplicationIcon>
+		<Win32Resource />
+		<AssemblyName>Chess</AssemblyName>
+		<StartupObject>Chess_game_with_AI.App</StartupObject>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Pictures\128_01.png" />
+		<None Remove="Pictures\128_02.png" />
+		<None Remove="Pictures\128_03.png" />
+		<None Remove="Pictures\128_04.png" />
+		<None Remove="Pictures\128_05.png" />
+		<None Remove="Pictures\128_06.png" />
+		<None Remove="Pictures\128_08.png" />
+		<None Remove="Pictures\128_10.png" />
+		<None Remove="Pictures\128_11.png" />
+		<None Remove="Pictures\128_12.png" />
+		<None Remove="Pictures\128_13.png" />
+		<None Remove="Pictures\128_14.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Pictures\128_01.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_02.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_03.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_04.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_05.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_06.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_08.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_10.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_11.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_12.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_13.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Pictures\128_14.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+</Project>

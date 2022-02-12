@@ -1,0 +1,18 @@
+﻿<Window x:Class="Chess_game_with_AI.Difficulty_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Difficulty choosing" Height="265" Width="200" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="WhiteSmoke">
+    <StackPanel Margin="5">
+        <RadioButton x:Name="easy_radiobutton" Content="Easy" GroupName="difficulty" IsChecked="True" FontSize="24" VerticalContentAlignment="Center" Margin="5"/>
+        <RadioButton x:Name="medium_radiobutton" Content="Medium" GroupName="difficulty" FontSize="24" VerticalContentAlignment="Center" Margin="5"/>
+        <RadioButton x:Name="hard_radiobutton" Content="Hard" GroupName="difficulty" FontSize="24" VerticalContentAlignment="Center" Margin="5"/>
+        <RadioButton x:Name="veryhard_radiobutton" Content="Very Hard" GroupName="difficulty" FontSize="24" VerticalContentAlignment="Center" Margin="5"/>
+        <StackPanel Orientation="Horizontal" Margin="0, 5">
+            <Button Content="Save" FontSize="24" Click="Save_Click" Background="White" BorderBrush="Black" BorderThickness="2"/>
+            <Button Content="Exit" FontSize="24" Click="Exit_Click" Background="Red" BorderBrush="Red" Margin="75, 0, 0, 0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

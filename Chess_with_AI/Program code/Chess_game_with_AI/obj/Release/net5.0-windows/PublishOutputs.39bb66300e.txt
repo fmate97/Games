@@ -1,0 +1,17 @@
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_01.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_02.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_03.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_04.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_05.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_06.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_08.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_10.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_11.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_12.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_13.png
+C:\Users\fmate\Downloads\0_Chess\Pictures\128_14.png
+C:\Users\fmate\Downloads\0_Chess\Chess.exe
+C:\Users\fmate\Downloads\0_Chess\Chess.dll
+C:\Users\fmate\Downloads\0_Chess\Chess.deps.json
+C:\Users\fmate\Downloads\0_Chess\Chess.runtimeconfig.json
+C:\Users\fmate\Downloads\0_Chess\Chess.pdb

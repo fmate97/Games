@@ -1,0 +1,13 @@
+﻿<Window x:Class="Chess_game_with_AI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Chess" Height="230" Width="240" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="WhiteSmoke">
+    <StackPanel>
+        <Button Content="Play" HorizontalAlignment="Center" Margin="5" Click="Play_Click" Background="White" BorderBrush="Black" BorderThickness="2" FontSize="36" Width="200"/>
+        <Button Content="Results" HorizontalAlignment="Center" Margin="5" Click="Results_Click" Background="White" BorderBrush="Black" BorderThickness="2" FontSize="36" Width="200"/>
+        <Button Content="Exit" HorizontalAlignment="Center" Margin="5" Click="Exit_Click" Background="Red" BorderBrush="Red" FontSize="36" Width="200"/>
+    </StackPanel>
+</Window>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\fmate\source\repos\Chess_game_with_AI\Chess_game_with_AI\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Chess_Window.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Difficulty_Window.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="HighScoreListWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Chess_Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Difficulty_Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="HighScoreListWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,166 @@
+﻿<Window x:Class="Chess_game_with_AI.Chess_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Game" Height="580" Width="810" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <Image x:Key="white_pawn_0" x:Name="white_pawn_0" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_1" x:Name="white_pawn_1" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_2" x:Name="white_pawn_2" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_3" x:Name="white_pawn_3" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_4" x:Name="white_pawn_4" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_5" x:Name="white_pawn_5" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_6" x:Name="white_pawn_6" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+        <Image x:Key="white_pawn_7" x:Name="white_pawn_7" Source="/Pictures/128_11.png" Width="50" Height="50"/>
+
+        <Image x:Key="black_pawn_0" x:Name="black_pawn_0" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_1" x:Name="black_pawn_1" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_2" x:Name="black_pawn_2" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_3" x:Name="black_pawn_3" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_4" x:Name="black_pawn_4" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_5" x:Name="black_pawn_5" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_6" x:Name="black_pawn_6" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+        <Image x:Key="black_pawn_7" x:Name="black_pawn_7" Source="/Pictures/128_06.png" Width="50" Height="50"/>
+
+        <Image x:Key="white_rook_0" x:Name="white_rook_0" Source="/Pictures/128_12.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+        <Image x:Key="white_rook_1" x:Name="white_rook_1" Source="/Pictures/128_12.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="black_rook_0" x:Name="black_rook_0" Source="/Pictures/128_01.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+        <Image x:Key="black_rook_1" x:Name="black_rook_1" Source="/Pictures/128_01.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="white_bishop_0" x:Name="white_bishop_0" Source="/Pictures/128_13.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+        <Image x:Key="white_bishop_1" x:Name="white_bishop_1" Source="/Pictures/128_13.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="black_bishop_0" x:Name="black_bishop_0" Source="/Pictures/128_03.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+        <Image x:Key="black_bishop_1" x:Name="black_bishop_1" Source="/Pictures/128_03.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="white_knight_0" x:Name="white_knight_0" Source="/Pictures/128_08.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+        <Image x:Key="white_knight_1" x:Name="white_knight_1" Source="/Pictures/128_08.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="black_knight_0" x:Name="black_knight_0" Source="/Pictures/128_02.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+        <Image x:Key="black_knight_1" x:Name="black_knight_1" Source="/Pictures/128_02.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="white_queen_0" x:Name="white_queen_0" Source="/Pictures/128_14.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="black_queen_0" x:Name="black_queen_0" Source="/Pictures/128_04.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="white_king_0" x:Name="white_king_0" Source="/Pictures/128_10.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+
+        <Image x:Key="black_king_0" x:Name="black_king_0" Source="/Pictures/128_05.png" Width="50" Height="50" MouseLeftButtonDown="ResurrectionFromTheCemetery"/>
+    </Window.Resources>
+    <Grid Background="WhiteSmoke">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5, 0, 0, 0">
+            <Label Content="Step counter:"/>
+            <Label x:Name="stepcounter_label" Content="0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Label Content="Elapsed time:"/>
+            <Label x:Name="time_label" Content="00:00:00"/>
+        </StackPanel>
+        <Label x:Name="chess_label" Margin="0, 12, 0, 0" Content="Chess!" Foreground="Red" FontWeight="Bold" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Collapsed"/>
+        <StackPanel x:Name="progressStackPanel" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0, 12, 0, 0" Visibility="Collapsed" Orientation="Horizontal">
+            <ProgressBar x:Name="progressBar" Width="150" Height="15"/>
+            <Label Margin="10, 0, 0, 0" Content="Please wait AI's thinking..." Foreground="Blue" FontWeight="Bold" FontSize="16"/>
+        </StackPanel>
+        <Button Content="Give up the chess game" Click="GiveUp_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0, 5, 5, 0" Foreground="WhiteSmoke" FontWeight="Bold" Background="Red" BorderBrush="Red"/>
+        <Grid HorizontalAlignment="Center" Margin="5, 35, 5, 5" Height="500" Width="800">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="PlayTable" Height="400" Width="400" Grid.Row="1" Grid.Column="4" Background="Gray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid x:Name="letterGrid1" Grid.Row="0" Grid.Column="4" Background="Gray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid x:Name="letterGrid2" Grid.Row="3" Grid.Column="4" Background="Gray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid x:Name="numberGrid1" Grid.Row="1" Grid.Column="3" Background="Gray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+            <Grid x:Name="numberGrid2" Grid.Row="1" Grid.Column="5" Background="Gray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+            <StackPanel x:Name="AI_graveyard1" Grid.Row="1" Grid.Column="1" Background="Gray"/>
+            <StackPanel x:Name="AI_graveyard2" Grid.Row="1" Grid.Column="0" Background="Gray"/>
+            <StackPanel x:Name="Player_graveyard1" Grid.Row="1" Grid.Column="7" Background="Gray"/>
+            <StackPanel x:Name="Player_graveyard2" Grid.Row="1" Grid.Column="8" Background="Gray"/>
+
+            <Grid Grid.Row="0" Grid.Column="3" Background="Gray"/>
+            <Grid Grid.Row="0" Grid.Column="5" Background="Gray"/>
+            <Grid Grid.Row="2" Grid.Column="3" Background="Gray"/>
+            <Grid Grid.Row="2" Grid.Column="5" Background="Gray"/>
+        </Grid>
+    </Grid>
+</Window>
