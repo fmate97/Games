@@ -1685,7 +1685,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1759692448689359965, guid: 3939da964c5c16c48ae24edab13b9350, type: 2}
   m_audioClip: {fileID: 8300000, guid: c12d40421acc84a4b90823d6080bbad1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.237
+  m_Volume: 0.05
   m_Pitch: 0.9
   Loop: 0
   Mute: 0
@@ -3906,7 +3906,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 243271408}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: EffectVolumeToggle
+        m_MethodName: SetFullscreen
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6391,7 +6391,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: 2560 x 1080 @ 60hz
+    - m_Text: Option A
       m_Image: {fileID: 0}
     - m_Text: Option B
       m_Image: {fileID: 0}
@@ -12262,7 +12262,6 @@ GameObject:
   - component: {fileID: 4313333398085041191}
   - component: {fileID: 4130667908252397363}
   - component: {fileID: 4130714317142427553}
-  - component: {fileID: 4130736543599884693}
   m_Layer: 5
   m_Name: YesButton
   m_TagString: Untagged
@@ -12362,9 +12361,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ReturnMenu
+      - m_Target: {fileID: 243271408}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ExitYesButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12374,35 +12373,6 @@ MonoBehaviour:
           m_StringArgument: IntroCinematic
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4130736543599884693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4092950405804616543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: PlayHover
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &4133913501843142705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13623,7 +13593,6 @@ GameObject:
   - component: {fileID: 8774664919111362761}
   - component: {fileID: 8884126573421427677}
   - component: {fileID: 8884168673657099087}
-  - component: {fileID: 8884060135537241467}
   m_Layer: 5
   m_Name: NoButton
   m_TagString: Untagged
@@ -13723,35 +13692,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 8827237633663155621}
   m_maskType: 0
---- !u!114 &8884060135537241467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8850912656645652401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: PlayHover
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &8884126573421427677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13826,9 +13766,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 243271408}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ExitNoButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,10 +1,10 @@
-using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
+using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using System;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] Toggle mainValueMuteToggle;
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] TMP_InputField musicValueInputText;
-    [SerializeField] Toggle musicValueMuteToggle;    
+    [SerializeField] Toggle musicValueMuteToggle;
     [SerializeField] Slider effectVolumeSlider;
     [SerializeField] TMP_InputField effectValueInputText;
     [SerializeField] Toggle effectValueMuteToggle;
@@ -37,14 +37,88 @@ public class MainMenuController : MonoBehaviour
     private string _showMainMenuTrigger = "showMainMenu", _showSettingsTrigger = "showSettings";
     private string _mainVolume = "MainVolume", _musicVolume = "MusicVolume", _effectVolume = "EffectVolume";
     private Resolution[] _resolutions;
+    private SettingsData _settingsData;
 
     void Start()
+    {
+        InitSettingsPanel();
+    }
+
+    void InitSettingsPanel()
+    {
+        _settingsData = SaveSystem.LoadSettings();
+
+        if (_settingsData.Equals(new SettingsData()))
+        {
+            InitResolutionDropDown();
+            fullscreenToggle.isOn = Screen.fullScreen;
+
+            float mainVolumeValue = 50f;
+            float musicVolumeValue = 50f;
+            float effectVolumeValue = 50f;
+
+            mainVolumeSlider.value = mainVolumeValue - 80f;
+            audioMixer.SetFloat(_mainVolume, mainVolumeSlider.value);
+            mainValueInputText.text = $"{mainVolumeValue}";
+
+            musicVolumeSlider.value = musicVolumeValue - 80;
+            audioMixer.SetFloat(_musicVolume, musicVolumeSlider.value);
+            musicValueInputText.text = $"{musicVolumeValue}";
+
+            effectVolumeSlider.value = effectVolumeValue - 80;
+            audioMixer.SetFloat(_effectVolume, effectVolumeSlider.value);
+            effectValueInputText.text = $"{effectVolumeValue}";
+        }
+        else
+        {
+            string[] split1 = _settingsData.resolution.Split('x');
+            int width = Int32.Parse(split1[0]);
+            string[] split2 = split1[1].Split('@');
+            int height = Int32.Parse(split2[0]);
+            string refreshRateString = split2[1].Replace("hz", "");
+            int refreshRate = Int32.Parse(refreshRateString);
+            bool isFullscreen = _settingsData.isFullscreen;
+
+            Screen.SetResolution(width, height, isFullscreen, refreshRate);
+            InitResolutionDropDown();
+            fullscreenToggle.isOn = isFullscreen;
+
+            mainVolumeSlider.value = _settingsData.mainVolume - 80f;
+            audioMixer.SetFloat(_mainVolume, mainVolumeSlider.value);
+            mainValueInputText.text = $"{_settingsData.mainVolume}";
+            if (_settingsData.mainVolume == 0f)
+            {
+                mainValueMuteToggle.isOn = true;
+                mainVolumeSlider.interactable = false;
+            }
+
+            musicVolumeSlider.value = _settingsData.musicVolume - 80f;
+            audioMixer.SetFloat(_musicVolume, musicVolumeSlider.value);
+            musicValueInputText.text = $"{_settingsData.musicVolume}";
+            if (_settingsData.musicVolume == 0f)
+            {
+                musicValueMuteToggle.isOn = true;
+                musicVolumeSlider.interactable = false;
+            }
+
+            effectVolumeSlider.value = _settingsData.effectVolume - 80f;
+            audioMixer.SetFloat(_effectVolume, effectVolumeSlider.value);
+            effectValueInputText.text = $"{_settingsData.effectVolume}";
+            if (_settingsData.effectVolume == 0f)
+            {
+                effectValueMuteToggle.isOn = true;
+                effectVolumeSlider.interactable = false;
+            }
+        }
+    }
+
+    void InitResolutionDropDown()
     {
         _resolutions = Screen.resolutions;
         resolutionDropDown.ClearOptions();
         int currentResolutionIndex = 0;
         List<string> options = new List<string>();
-        for(int i = 0; i < _resolutions.Length; i++)
+        for (int i = 0; i < _resolutions.Length; i++)
         {
             options.Add($"{_resolutions[i].width} x {_resolutions[i].height} @ {_resolutions[i].refreshRate}hz");
 
@@ -56,6 +130,19 @@ public class MainMenuController : MonoBehaviour
         resolutionDropDown.AddOptions(options);
         resolutionDropDown.value = currentResolutionIndex;
         resolutionDropDown.RefreshShownValue();
+    }
+
+    void SaveSettingsPanel()
+    {
+        SettingsData settingsData = new SettingsData(
+            Screen.fullScreen,
+            resolutionDropDown.options[resolutionDropDown.value].text,
+            (int)mainVolumeSlider.value + 80,
+            (int)musicVolumeSlider.value + 80,
+            (int)effectVolumeSlider.value + 80
+            );
+
+        SaveSystem.SaveSettings(settingsData);
     }
 
     void PlayButtonClickSound()
@@ -121,7 +208,7 @@ public class MainMenuController : MonoBehaviour
     {
         PlayButtonClickSound();
 
-		Application.Quit();
+        Application.Quit();
     }
 
     public void ExitNoButtonClick()
@@ -135,9 +222,17 @@ public class MainMenuController : MonoBehaviour
     {
         PlayButtonClickSound();
 
+        SaveSettingsPanel();
+
         cameraAnimator.SetTrigger(_showMainMenuTrigger);
 
         PlayUISwitchClickSound();
+
+        audioPanel.SetActive(false);
+        highlightAudio.SetActive(false);
+
+        videoPanel.SetActive(false);
+        highlightVideo.SetActive(false);
     }
 
     public void VideoButtonClick()

@@ -37,7 +37,7 @@ public class EnemyHPBarController : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.LookAt(transform.position + mainCamera.transform.forward); 
+        transform.LookAt(transform.position + mainCamera.transform.forward);
     }
 
     public bool GetHit(int hitDMG)
