@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Roads
-  - Terrain
-  - DamagedRoads
   - Enemy
   - PlayerWeapon
   - EnemyWeapon
+  - Water
+  - Fence
+  - LevelEnd
   layers:
   - Default
   - TransparentFX

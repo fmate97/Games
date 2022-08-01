@@ -194,7 +194,7 @@ public class MainMenuController : MonoBehaviour
     {
         PlayButtonClickSound();
 
-        SceneManager.LoadScene("MainLevel");
+        SceneManager.LoadScene("Level_00");
     }
 
     public void LoadGameButtonClick()

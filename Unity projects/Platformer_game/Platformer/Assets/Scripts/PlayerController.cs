@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [Header("Basic Settings")]
     [SerializeField] Rigidbody rigidBody;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject mainCamera;
     [Header("Movement Settings")]
     [SerializeField] float movementSpeed;
     [SerializeField] float runSpeedMultiplier;
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject roadStartPoint;
     [SerializeField] GameObject roadEndPoint;
     [SerializeField] int offRoadDamage;
+    [SerializeField] float fenceDamageTime;
+    [SerializeField] int fenceDamage;
     [Header("Attack Settings")]
     [SerializeField] float attackCooldown;
     [SerializeField] public int attackDamage;
@@ -28,9 +31,9 @@ public class PlayerController : MonoBehaviour
     [Header("Public Variables")]
     public bool PlayerIsAttacking = false;
 
-    private bool _jump = false, _doubleJumping = false, _stopMovement = false, _isDying = false;
-    private float _gravityScale = 1f, _runSpeed = 0f, _jumpTime = 0f, _attackTime = 0f, _getAttackTime = 0f;
-    private string _roadTag = "Roads", _terrainTag = "Terrain", _damagedRoadTag = "DamagedRoads", _enemyWeaponTag = "EnemyWeapon";
+    private bool _jump = false, _doubleJumping = false, _stopMovement = false, _isDying = false, _onFence = false;
+    private float _gravityScale = 1f, _runSpeed = 0f, _jumpTime = 0f, _attackTime = 0f, _getAttackTime = 0f, _getFenceDamageTime = 0f;
+    private string _roadTag = "Roads", _waterTag = "Water", _fenceTag = "Fence", _enemyWeaponTag = "EnemyWeapon", _levelEndTag = "LevelEnd", _enemyTag = "Enemy";
     private string _isWalkingBool = "isWalking", _isSprintingBool = "isSprinting", _isJumpingBool = "isJumping", _isAttackingBool = "isAttacking", _isDyingBool = "isDying", _isDyingStayBool = "isDyingStay";
     private string _isNormalJumpingTrigger = "isNormalJumping", _isDoubleJumpingTrigger = "isDoubleJumping", _isAttackingTrigger = "isAttackingTrigger";
     private Vector3 _lastOnRoadPosition;
@@ -57,6 +60,16 @@ public class PlayerController : MonoBehaviour
             _getAttackTime += Time.deltaTime;
             _attackTime += Time.deltaTime;
             _jumpTime += Time.deltaTime;
+            _getFenceDamageTime += Time.deltaTime;
+
+            if (_onFence && _getFenceDamageTime >= fenceDamageTime)
+            {
+                _getFenceDamageTime = 0f;
+                if (!_playerHPBarController.GetHit(fenceDamage))
+                {
+                    DieAnimationStart();
+                }
+            }
 
             if (Input.GetMouseButtonDown(0) && _attackTime >= attackCooldown)
             {
@@ -74,7 +87,7 @@ public class PlayerController : MonoBehaviour
             {
                 BasicMovement();
             }
-
+            
             if (_jump && rigidBody.velocity.y < 0.1f)
             {
                 rigidBody.AddForce(new Vector3(0, -fallingSpeed, 0), ForceMode.Impulse);
@@ -93,23 +106,22 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 move = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W))
         {
-            move += Vector3.forward;
+            move += GetCameraForward();
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S))
         {
-            move += Vector3.back;
+            move += GetCameraBack();
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
-            move += Vector3.left;
+            move += GetCameraLeft();
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
-            move += Vector3.right;
+            move += GetCameraRight();
         }
-
 
         if (Input.GetKeyDown(KeyCode.Space) && !_jump && _jumpTime >= jumpButtonTime)
         {
@@ -128,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
             animator.SetTrigger(_isDoubleJumpingTrigger);
             animator.SetBool(_isJumpingBool, true);
-
+            
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * _gravityScale));
             rigidBody.velocity = Vector3.zero;
             rigidBody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
@@ -176,26 +188,99 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    Vector3 GetCameraForward()
+    {
+        float rotationY = mainCamera.transform.rotation.y;
+
+        if (rotationY >= -0.1f && rotationY <= 0.1f)
+            return new Vector3(0, 0, 1);
+        else if (rotationY >= 0.65 && rotationY <= 0.75f)
+            return new Vector3(1, 0, 0);
+        else if (rotationY <= -0.65 && rotationY >= -0.75f)
+            return new Vector3(-1, 0, 0);
+        else if (rotationY >= 0.9 && rotationY <= 1.1f)
+            return new Vector3(0, 0, -1);
+        else
+            return new Vector3(0, 0, 0);
+    }
+
+    Vector3 GetCameraBack()
+    {
+        float rotationY = mainCamera.transform.rotation.y;
+
+        if (rotationY >= -0.1f && rotationY <= 0.1f)
+            return new Vector3(0, 0, -1);
+        else if (rotationY >= 0.65 && rotationY <= 0.75f)
+            return new Vector3(-1, 0, 0);
+        else if (rotationY <= -0.65 && rotationY >= -0.75f)
+            return new Vector3(1, 0, 0);
+        else if (rotationY >= 0.9 && rotationY <= 1.1f)
+            return new Vector3(0, 0, 1);
+        else
+            return new Vector3(0, 0, 0);
+    }
+
+    Vector3 GetCameraLeft()
+    {
+        float rotationY = mainCamera.transform.rotation.y;
+
+        if (rotationY >= -0.1f && rotationY <= 0.1f)
+            return new Vector3(-1, 0, 0);
+        else if (rotationY >= 0.65 && rotationY <= 0.75f)
+            return new Vector3(0, 0, 1);
+        else if (rotationY <= -0.65 && rotationY >= -0.75f)
+            return new Vector3(0, 0, -1);
+        else if (rotationY >= 0.9 && rotationY <= 1.1f)
+            return new Vector3(1, 0, 0);
+        else
+            return new Vector3(0, 0, 0);
+    }
+
+    Vector3 GetCameraRight()
+    {
+        float rotationY = mainCamera.transform.rotation.y;
+
+        if (rotationY >= -0.1f && rotationY <= 0.1f)
+            return new Vector3(1, 0, 0);
+        else if (rotationY >= 0.65 && rotationY <= 0.75f)
+            return new Vector3(0, 0, -1);
+        else if (rotationY <= -0.65 && rotationY >= -0.75f)
+            return new Vector3(0, 0, 1);
+        else if (rotationY >= 0.9 && rotationY <= 1.1f)
+            return new Vector3(-1, 0, 0);
+        else
+            return new Vector3(0, 0, 0);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag(_roadTag))
         {
+            _onFence = false;
             _jump = false;
             _jumpTime = 0f;
 
             _lastOnRoadPosition = transform.position;
+            rigidBody.velocity = Vector3.zero;
         }
-        else if (collision.gameObject.CompareTag(_damagedRoadTag))
-        {
-            _jump = false;
-            _jumpTime = 0f;
-        }
-        else if (collision.gameObject.CompareTag(_terrainTag))
+        else if (collision.gameObject.CompareTag(_fenceTag))
         {
             _jump = false;
             _jumpTime = 0f;
 
-            Invoke("PlayerRespawn", 1f);
+            if (collision.contacts[0].normal.y >= 0.5f)
+            {
+                _onFence = true;
+            }
+
+            rigidBody.velocity = Vector3.zero;
+        }
+        else if (collision.gameObject.CompareTag(_waterTag))
+        {
+            _onFence = false;
+            _jump = false;
+            _jumpTime = 0f;
+            PlayerRespawn();
         }
     }
 
@@ -222,7 +307,11 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag(_enemyWeaponTag) && _getAttackTime >= .1f)
+        if (other.gameObject.CompareTag(_levelEndTag))
+        {
+            LoadNextLevel();
+        }
+        else if (other.gameObject.CompareTag(_enemyWeaponTag) && _getAttackTime >= .1f)
         {
             EnemyController enemyController = other.gameObject.GetComponentInParent<EnemyController>();
             if (enemyController.EnemyIsAttacking)
@@ -258,5 +347,13 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void LoadNextLevel()
+    {
+        if(GameObject.FindGameObjectsWithTag(_enemyTag).Length == 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }        
     }
 }
