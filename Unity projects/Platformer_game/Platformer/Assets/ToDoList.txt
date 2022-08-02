@@ -1,0 +1,4 @@
+deleting unnecessary player animations
+player jump:sometimes does not work properly
+			falling backwards with too much force?
+shield: not work properly

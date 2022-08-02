@@ -11,6 +11,10 @@ TagManager:
   - Water
   - Fence
   - LevelEnd
+  - PlayerShield
+  - ItemBox
+  - Trap
+  - MovingRoads
   layers:
   - Default
   - TransparentFX

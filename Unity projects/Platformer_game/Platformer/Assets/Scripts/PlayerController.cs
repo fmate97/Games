@@ -31,13 +31,14 @@ public class PlayerController : MonoBehaviour
     [Header("Public Variables")]
     public bool PlayerIsAttacking = false;
 
-    private bool _jump = false, _doubleJumping = false, _stopMovement = false, _isDying = false, _onFence = false;
+    private bool _jump = false, _doubleJumping = false, _stopMovement = false, _isDying = false, _onFence = false, _isDefending = false;
     private float _gravityScale = 1f, _runSpeed = 0f, _jumpTime = 0f, _attackTime = 0f, _getAttackTime = 0f, _getFenceDamageTime = 0f;
-    private string _roadTag = "Roads", _waterTag = "Water", _fenceTag = "Fence", _enemyWeaponTag = "EnemyWeapon", _levelEndTag = "LevelEnd", _enemyTag = "Enemy";
-    private string _isWalkingBool = "isWalking", _isSprintingBool = "isSprinting", _isJumpingBool = "isJumping", _isAttackingBool = "isAttacking", _isDyingBool = "isDying", _isDyingStayBool = "isDyingStay";
+    private string _roadTag = "Roads", _waterTag = "Water", _fenceTag = "Fence", _enemyWeaponTag = "EnemyWeapon", _levelEndTag = "LevelEnd", _enemyTag = "Enemy", _itemBoxTag = "ItemBox", _movingRoadsTag = "MovingRoads";
+    private string _isWalkingBool = "isWalking", _isSprintingBool = "isSprinting", _isJumpingBool = "isJumping", _isAttackingBool = "isAttacking", _isDyingBool = "isDying", _isDyingStayBool = "isDyingStay", _isDefendBool = "isDefend", _getHitBool = "getHit";
     private string _isNormalJumpingTrigger = "isNormalJumping", _isDoubleJumpingTrigger = "isDoubleJumping", _isAttackingTrigger = "isAttackingTrigger";
     private Vector3 _lastOnRoadPosition;
     private PlayerHPBarController _playerHPBarController;
+    private Transform _originalParent;
 
     void Start()
     {
@@ -48,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
         _playerHPBarController = healthBar.GetComponent<PlayerHPBarController>();
         _playerHPBarController.HPBarInit(enemyMaxHealth);
+
+        _originalParent = transform.parent.transform;
 
         _attackTime = attackCooldown + 1f;
         _runSpeed = movementSpeed * runSpeedMultiplier;
@@ -71,11 +74,19 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && _attackTime >= attackCooldown)
+            if (Input.GetMouseButton(1) && !_jump)
+            {
+                _isDefending = true;
+                animator.SetBool(_isDefendBool, true);
+                DefendPlayerRotate();
+            }
+            else if (Input.GetMouseButtonDown(0) && _attackTime >= attackCooldown)
             {
                 _attackTime = 0f;
 
                 _stopMovement = true;
+                _isDefending = false;
+                animator.SetBool(_isDefendBool, false);
                 animator.SetBool(_isWalkingBool, false);
                 animator.SetBool(_isSprintingBool, false);
                 animator.SetBool(_isAttackingBool, true);
@@ -85,6 +96,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (!_stopMovement || (_stopMovement && _jump))
             {
+                _isDefending = false;
+                animator.SetBool(_isDefendBool, false);
                 BasicMovement();
             }
             
@@ -188,6 +201,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void DefendPlayerRotate()
+    {
+        Vector3 move = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            move += GetCameraForward();
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            move += GetCameraBack();
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            move += GetCameraLeft();
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            move += GetCameraRight();
+        }
+
+        if (!move.Equals(Vector3.zero))
+        {
+            Quaternion toRotation = Quaternion.LookRotation(move, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
     Vector3 GetCameraForward()
     {
         float rotationY = mainCamera.transform.rotation.y;
@@ -263,8 +304,25 @@ public class PlayerController : MonoBehaviour
             _lastOnRoadPosition = transform.position;
             rigidBody.velocity = Vector3.zero;
         }
+        else if (collision.gameObject.CompareTag(_movingRoadsTag))
+        {
+            _onFence = false;
+            _jump = false;
+            _jumpTime = 0f;
+
+            rigidBody.velocity = Vector3.zero;
+        }
+        else if (collision.gameObject.CompareTag(_itemBoxTag))
+        {
+            _onFence = false;
+            _jump = false;
+            _jumpTime = 0f;
+
+            rigidBody.velocity = Vector3.zero;
+        }
         else if (collision.gameObject.CompareTag(_fenceTag))
         {
+            _onFence = false;
             _jump = false;
             _jumpTime = 0f;
 
@@ -318,9 +376,41 @@ public class PlayerController : MonoBehaviour
             {
                 _getAttackTime = 0f;
                 int getDamage = enemyController.attackDamage;
-                if (!_playerHPBarController.GetHit(getDamage))
+
+                if (!_isDefending)
+                {                    
+                    if (!_playerHPBarController.GetHit(getDamage))
+                    {
+                        DieAnimationStart();
+                    }
+                    else
+                    {
+                        _stopMovement = true;
+                        animator.SetBool(_getHitBool, true);
+                    }
+                }
+                else
                 {
-                    DieAnimationStart();
+                    Vector3 toTarget = (other.gameObject.transform.position - transform.position).normalized;
+                    float dot = Vector3.Dot(toTarget, gameObject.transform.forward);
+
+                    Debug.Log(dot);
+
+                    if (dot <= 0.5f)
+                    {
+                        if (!_playerHPBarController.GetHit(getDamage))
+                        {
+                            DieAnimationStart();
+                        }
+                        else
+                        {
+                            _stopMovement = true;
+                            animator.SetBool(_getHitBool, true);
+                        }
+                    }
+
+                    _stopMovement = true;
+                    animator.SetBool(_getHitBool, true);
                 }
             }
         }
@@ -341,6 +431,12 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool(_isDyingStayBool, true);
         Invoke("DestroyPlayer", 2f);
+    }
+
+    void GetHitAnimationEnd()
+    {
+        _stopMovement = false;
+        animator.SetBool(_getHitBool, false);
     }
 
     void DestroyPlayer()

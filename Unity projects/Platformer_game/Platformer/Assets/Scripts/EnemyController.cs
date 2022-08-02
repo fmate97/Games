@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     private int _waypointIndex = 0;
     private float stopFollowingIfReachThisMinCoordinate = 0f, stopFollowingIfReachThisMaxCoordinate = 0f;
     private float getAttackTime = 0f, _attackTime = 0f;
-    private string _playerTag = "Player", _playerWeaponTag = "PlayerWeapon";
+    private string _playerTag = "Player", _playerWeaponTag = "PlayerWeapon", _playerShieldTag = "PlayerShield";
     private string _isWalkingBool = "isWalking", _isDyingBool = "isDying", _isAttackingBool = "isAttacking";
     private GameObject _player;
     private PlayerController _playerController;
@@ -204,13 +204,20 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag(_playerWeaponTag)
             && _playerController.PlayerIsAttacking
-            && getAttackTime >= .1f)
+            && getAttackTime >= 0.85f)
         {
+
+            Debug.Log(getAttackTime);
+
             getAttackTime = 0f;
             if (!_enemyHPBarController.GetHit(_playerController.attackDamage))
             {
                 DieAnimationStart();
             }
+        }
+        else if (other.gameObject.CompareTag(_playerShieldTag))
+        {
+            EnemyIsAttacking = false;
         }
     }
 
