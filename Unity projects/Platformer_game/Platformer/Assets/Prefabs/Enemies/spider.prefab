@@ -2142,6 +2142,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4173407158323428750}
     m_Modifications:
+    - target: {fileID: 501312334642647004, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 501312335726355368, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -2149,6 +2153,18 @@ PrefabInstance:
     - target: {fileID: 501312335726355368, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 501312335726355369, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 501312336046691702, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 501312336205948786, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1671270629238107392, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
       propertyPath: m_Pivot.x
@@ -2237,6 +2253,10 @@ PrefabInstance:
     - target: {fileID: 1671270629238107396, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
       propertyPath: m_Name
       value: EnemyHPBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671270629238107396, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1671270629238107396, guid: 986c9c5a2e1f4ad49b236844f15d9f1f, type: 3}
       propertyPath: m_IsActive

@@ -26,14 +26,15 @@ public class PlayerHPBarController : MonoBehaviour
 
     void Update()
     {
-        if (_displayHPValue != _HPValue)
+        if (_displayHPValue > _HPValue)
         {
             _displayHPValue -= rateOfValueChange;
 
-            if (_displayHPValue < _HPValue)
-            {
-                _displayHPValue = _HPValue;
-            }
+            SetHPValue(Convert.ToInt32(_displayHPValue));
+        }
+        else if(_displayHPValue < _HPValue)
+        {
+            _displayHPValue += rateOfValueChange;
 
             SetHPValue(Convert.ToInt32(_displayHPValue));
         }
@@ -56,6 +57,16 @@ public class PlayerHPBarController : MonoBehaviour
         {
             _HPValue = 0;
             return false;
+        }
+    }
+
+    public void GetHP(int HPvalue)
+    {
+        _HPValue += HPvalue;
+
+        if(_HPValue > slider.maxValue)
+        {
+            _HPValue = (int)slider.maxValue;
         }
     }
 
